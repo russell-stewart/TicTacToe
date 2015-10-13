@@ -37,7 +37,7 @@ public class GameServer {
 
             }
             System.out.println("Both players ready!");
-            while(true) {
+            while(!players[0].isDone() || !players[1].isDone()) {
               players[0].takeTurn();
               players[1].takeTurn();
             }
@@ -45,6 +45,4 @@ public class GameServer {
             e.printStackTrace();
         }
     }
-
-
 }

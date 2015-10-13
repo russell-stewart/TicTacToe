@@ -8,9 +8,13 @@ public class PlayerConnection implements Runnable{
 	private PrintStream out;
 	private String marker;
 	private BufferedReader br;
+	private boolean isDone;
+	private boolean shouldPrintGameOver;
 
 
 	public PlayerConnection(Socket s, Board b){
+		shouldPrintGameOver = true;
+		isDone = false;
 		playerSocket = s;
 		this.b = b;
 		marker = "";
@@ -30,6 +34,10 @@ public class PlayerConnection implements Runnable{
 		while(true);
 	}
 
+	public boolean isDone() {
+		return isDone;
+	}
+
 	public void takeTurn() {
 		try{
 			if(marker.length() < 1) {
@@ -42,15 +50,31 @@ public class PlayerConnection implements Runnable{
 					e.printStackTrace();
 				}
 			}
-			out.println("It's your turn!");
-			out.println(b);
-			out.println("Enter a column and row to place your marker.");
-			out.println("Enter a Row (1, 2, or 3): ");
-			int row = Integer.parseInt(br.readLine()) - 1;
-			out.println("Enter a Column (1, 2, or 3):");
-			int col = Integer.parseInt(br.readLine()) - 1;
-			b.setBoard(col , row , marker);
-			out.println(b);
+			if(b.isGameDone()) {
+				if(shouldPrintGameOver) {
+					out.println(b);
+					out.println("Game over!");
+					isDone = true;
+					shouldPrintGameOver = false;
+				}
+			} else {
+				out.println("It's your turn!");
+				int row;
+				int col;
+				boolean shouldMove = true;
+
+				while(shouldMove) {
+						out.println(b);
+						out.println("Enter a column and row to place your marker.");
+						out.println("Enter a Column (1, 2, or 3): ");
+						row = Integer.parseInt(br.readLine()) - 1;
+						out.println("Enter a Row (1, 2, or 3):");
+						col = Integer.parseInt(br.readLine()) - 1;
+						if(b.setBoard(col , row , marker)) shouldMove = false;
+						else out.println("Invalid move!");
+					}
+					out.println(b);
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
