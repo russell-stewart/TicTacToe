@@ -45,7 +45,11 @@ public class AIPlayer implements Runnable{
     if(!hasMoved && b.getSquare(1,0).equals("*") && b.getSquare(1,0).equals(b.getSquare(1,1))) hasMoved = b.setBoard(1 , 2 , marker);
     if(!hasMoved && b.getSquare(2,1).equals("*") && b.getSquare(2,1).equals(b.getSquare(1,1))) hasMoved = b.setBoard(0 , 1 , marker);
     if(!hasMoved && b.getSquare(1,2).equals("*") && b.getSquare(1,2).equals(b.getSquare(1,1))) hasMoved = b.setBoard(1 , 0 , marker);
-
+    //checks for two corners in same row or column
+    if(!hasMoved && b.getSquare(0,0).equals("*") && b.getSquare(0,0).equals(b.getSquare(0,2))) hasMoved = b.setBoard(0 , 1 , marker);
+    if(!hasMoved && b.getSquare(0,0).equals("*") && b.getSquare(0,0).equals(b.getSquare(2,0))) hasMoved = b.setBoard(1 , 0 , marker);
+    if(!hasMoved && b.getSquare(2,2).equals("*") && b.getSquare(2,2).equals(b.getSquare(0,2))) hasMoved = b.setBoard(1 , 2 , marker);
+    if(!hasMoved && b.getSquare(2,2).equals("*") && b.getSquare(2,2).equals(b.getSquare(2,0))) hasMoved = b.setBoard(2 , 1 , marker);
 
     //checks for pairs around top left corner
     if(!hasMoved && !b.getSquare(0,0).equals("-") && b.getSquare(0,0).equals(b.getSquare(0,1))) hasMoved = b.setBoard(0 , 2 , marker);
@@ -74,6 +78,12 @@ public class AIPlayer implements Runnable{
     if(!hasMoved && !b.getSquare(1,0).equals("-") && b.getSquare(1,0).equals(b.getSquare(1,1))) hasMoved = b.setBoard(1 , 2 , marker);
     if(!hasMoved && !b.getSquare(2,1).equals("-") && b.getSquare(2,1).equals(b.getSquare(1,1))) hasMoved = b.setBoard(0 , 1 , marker);
     if(!hasMoved && !b.getSquare(1,2).equals("-") && b.getSquare(1,2).equals(b.getSquare(1,1))) hasMoved = b.setBoard(1 , 0 , marker);
+    //checks for two corners in same row or column
+    if(!hasMoved && !b.getSquare(0,0).equals("-") && b.getSquare(0,0).equals(b.getSquare(0,2))) hasMoved = b.setBoard(0 , 1 , marker);
+    if(!hasMoved && !b.getSquare(0,0).equals("-") && b.getSquare(0,0).equals(b.getSquare(2,0))) hasMoved = b.setBoard(1 , 0 , marker);
+    if(!hasMoved && !b.getSquare(2,2).equals("-") && b.getSquare(2,2).equals(b.getSquare(0,2))) hasMoved = b.setBoard(1 , 2 , marker);
+    if(!hasMoved && !b.getSquare(2,2).equals("-") && b.getSquare(2,2).equals(b.getSquare(2,0))) hasMoved = b.setBoard(2 , 1 , marker);
+
 
     //else tries to move into random corner or middle
     int corner = r.nextInt(5);
@@ -82,5 +92,12 @@ public class AIPlayer implements Runnable{
     if(corner == 2 && !hasMoved) hasMoved = b.setBoard(1 , 1 , marker);
     if(corner == 3 && !hasMoved) hasMoved = b.setBoard(2 , 0 , marker);
     if(corner == 4 && !hasMoved) hasMoved = b.setBoard(2 , 2 , marker);
+
+    //else moves to random other square
+    int space = r.nextInt(4);
+    if(space == 0 && !hasMoved) hasMoved = b.setBoard(1 , 0 , marker);
+    if(space == 1 && !hasMoved) hasMoved = b.setBoard(0 , 1 , marker);
+    if(space == 2 && !hasMoved) hasMoved = b.setBoard(1 , 2 , marker);
+    if(space == 3 && !hasMoved) hasMoved = b.setBoard(2 , 1 , marker);
   }
 }
