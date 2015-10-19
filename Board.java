@@ -48,4 +48,8 @@ public class Board implements Serializable{
 		else if(!board[0][0].equals("-") && !board[0][1].equals("-") && !board[0][2].equals("-") && !board[1][0].equals("-") && !board[1][1].equals("-") && !board[1][2].equals("-") && !board[2][0].equals("-") && !board[2][1].equals("-") && !board[2][2].equals("-")) return true;
 		else return false;
 	}
+
+	public String getSquare(int col , int row) {
+		return board[col][row];
+	}
 }
