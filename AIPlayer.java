@@ -86,12 +86,13 @@ public class AIPlayer implements Runnable{
 
 
     //else tries to move into random corner or middle
-    int corner = r.nextInt(5);
+    int corner = r.nextInt(4);
     if(corner == 0 && !hasMoved) hasMoved = b.setBoard(0 , 0 , marker);
     if(corner == 1 && !hasMoved) hasMoved = b.setBoard(0 , 2 , marker);
-    if(corner == 2 && !hasMoved) hasMoved = b.setBoard(1 , 1 , marker);
-    if(corner == 3 && !hasMoved) hasMoved = b.setBoard(2 , 0 , marker);
-    if(corner == 4 && !hasMoved) hasMoved = b.setBoard(2 , 2 , marker);
+    if(corner == 2 && !hasMoved) hasMoved = b.setBoard(2 , 0 , marker);
+    if(corner == 3 && !hasMoved) hasMoved = b.setBoard(2 , 2 , marker);
+
+    if(!hasMoved && b.getSquare(1,1).equals("-")) hasMoved = b.setBoard(1,1,marker);
 
     //else moves to random other square
     int space = r.nextInt(4);
