@@ -12,9 +12,9 @@ public class GameServer {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        System.out.println("Would you like to play with one robot? (y/n)");
-        String response = s.nextLine();
-        if(response.equals("n")) {
+        System.out.println("How many robots would you like to play? (0-2):");
+        int response = s.nextInt();
+        if(response == 0) {
           ServerSocket myServer = null;
           Socket playerSocket = null;
           int i = 0;
@@ -49,9 +49,11 @@ public class GameServer {
              } catch (IOException e) {
                e.printStackTrace();
              }
-          }else {
+          }else if(response == 1) {
             Board b = new Board();
-            AIPlayer ai = new AIPlayer(b);
+            System.out.println("Enter a difficulty for the robot (1-5): ");
+            int d = s.nextInt();
+            AIPlayer ai = new AIPlayer(b , "*" , d);
             System.out.println("Robot made!");
             ServerSocket myServer = null;
             Socket playerSocket = null;
@@ -76,6 +78,21 @@ public class GameServer {
             }catch (IOException e) {
               System.out.println("server error");
             }
+          }else if(response == 2) {
+            Board b = new Board();
+            System.out.println("Enter a difficulty for the robot (1-5): ");
+            int d = s.nextInt();
+            AIPlayer p1 = new AIPlayer(b , "x" , d);
+            AIPlayer p2 = new AIPlayer(b , "o" , d);
+            System.out.println("Robots ready!");
+            while(!b.isGameDone()) {
+              p1.takeTurn();
+              p2.takeTurn();
+            }
+            System.out.println(b);
+            System.out.println("Game over!");
+          }else {
+            System.out.println("no.");
           }
     }
 }
